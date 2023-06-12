@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../global.css">
+    <link rel="stylesheet" href="./task.css">
+    <title>Document</title>
+</head>
+<body background="red">
+    <div class="task_content">
+        <div class="task_header">
+            <img src="../images/userPanel/i_plus.png" alt="" class="thea_img">
+                <div class="taskHeader_tit_cont">Tasks</div>
+            <img src="../images/userPanel/i_back_h.png" alt="" class="thea_img_back thea_img">
+        </div>
+
+        <div class="task_mainCont">
+            <div class="task_main_cont_1 task_main_cont">
+                <ul class="tasks_ul">
+                    <li class="task_li">
+                        <div class="tasl_li_desc">t cupidi.</div>
+                        <div class="task_li_name">Name Of Task</div>
+                        <div class="task_li_date_btnDel">
+                            <div class="task_li_date">19.8</div>
+                            <img src="../images/userPanel/i_del.png" alt="" class="task_li_btnDel">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="task_main_cont_2 task_main_cont">
+                <div class="tasks_info">
+                    <div class="ti_name_cont ti_t">
+                        <div class="ti_name ti_tit">Title</div>
+                        <input type="text" name="" id="" class="ti_tasks_info_inp ti_name_inp" >
+                    </div>
+                    <div class="ti_date_cont ti_t">
+                        <div class="ti_date ti_tit">Date</div>
+                        <input type="text" name="" id="" class="ti_tasks_info_inp ti_date_inp"  />
+                    </div>
+                    <div class="ti_desc_cont ti_t">
+                        <div class="ti_desc ti_tit">Info</div>
+                        <textarea type="text" name="" id="" class="ti_tasks_info_inp ti_desc_inp" ></textarea>
+                    </div>
+                </div>  
+            </div>
+
+            <div class="task_info_btn_const">
+                <button class="task_info_btn">Add</button>
+            </div>
+        </div>
+
+    </div>
+<script src="../pageSet.js"></script>
+<script src="./task.js"></script>
+
+<script>
+    const { ipcRenderer } = require('electron');
+
+    ipcRenderer.on('data', (event, taskj) => {
+        $('.tasks_ul').html(' ')
+        const tasksdata = JSON.parse(taskj.trim());
+        const tasks= tasksdata.sort(function(a,b){return a.id - b.id})
+        for (let i = 0; i < tasks.length; i++) {
+          let newTask = $('<li>').addClass('task_li').attr('task-id', tasks[i].id).appendTo('.tasks_ul')
+  
+          newTask.append($('<div>').addClass('task_li_name').text(tasks[i].name))
+          newTask.append($('<div>').addClass('tasl_li_desc').text(tasks[i].description))
+  
+          newTask.append($('<div>').addClass('task_li_date_btnDel').append($('<div>').addClass('task_li_date').text(tasks[i].date)).append($('<img>').addClass('task_li_btnDel').attr('src',"../images/userPanel/i_del.png")))
+        }
+    })
+
+    $('.task_info_btn').click((e) =>{
+        task_name = $('.ti_name_inp').val()
+        task_date = $('.ti_date_inp').val()
+        task_desc = $('.ti_desc_inp').val()
+        ipcRenderer.send('taks_add', task_name,task_date, task_desc)
+    })
+
+
+    $(document).on('click', '.task_li_btnDel', function(){
+        var task_id = $(this).closest('.task_li').attr('task-id')
+        ipcRenderer.send('taks_dell', task_id)
+    })
+
+    $(document).on('click', '.task_li', function(){
+        $(".ti_name_inp").val($(this).children(".task_li_name").text());
+        $(".ti_desc_inp").val($(this).children(".tasl_li_desc").text());
+        $(".ti_date_inp").val(
+          $(this).children(".task_li_date_btnDel").find(".task_li_date").text()
+        );
+    })
+
+    $('.thea_img_back').click(() =>{
+        ipcRenderer.send('leftUserPanelTaskClose')
+    })
+
+    
+</script>
+
+</body>
+</html>

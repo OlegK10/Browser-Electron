@@ -1,0 +1,111 @@
+.bg{
+    position: absolute;
+    top: 0;left: 0;right: 0;bottom: 0;
+    width: 100%; height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bg_img{
+    width: 100%; height: 100%;
+}
+
+.layot{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    top: 0;left: 0;right: 0;bottom: 0;
+    width: 100%; height: 100%;
+}
+
+.l{
+    position: absolute;
+}
+
+.l:nth-of-type(1){
+    animation: ring_1 5s ease-in infinite;
+}
+
+@keyframes ring_1 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+  }
+
+.l:nth-of-type(2){
+    animation: ring_2 3s linear infinite;
+}
+
+@keyframes ring_2 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+  }
+
+
+.l:nth-of-type(3){
+    animation: ring_3 7s ease-in-out infinite;
+}
+
+@keyframes ring_3 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+  }
+
+
+  .l:nth-of-type(4){
+    animation: ring_4 2s linear infinite;
+}
+
+@keyframes ring_4 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+  }
+
+
+
+
+.l:nth-of-type(5){
+    animation: ring_5 4s ease-in-out infinite;
+}
+
+@keyframes ring_5 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+  }
+
+
+.l:nth-of-type(6){
+    animation: ring_6 3s linear infinite;
+}
+
+@keyframes ring_6 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+  }

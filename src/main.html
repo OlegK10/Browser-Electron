@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./global.css">
+    <link rel="stylesheet" href="./main.css">
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="content">
+        <div class="main">
+
+            <div class="search_cont">
+                <div class="search_inp_img">
+                    <img src="./images/mainPage/i_eye.png" alt="" class="sii_eye">
+                    <input type="text" name="" class="ssi_inp" placeholder="Hledat" id="">
+                </div>
+            </div>
+
+            <div class="links_webs_cont links_cont">
+                <div class="links_webs_items links_item_cont">
+                    <img src="./images/mainPage/i_bombuj.png" alt="" url="https://www.bombuj.si/" class="lw_ic_i lw_ic_i_web " srcset="">
+                    <img src="./images/mainPage/i_fi.png" alt="" url="https://icons8.com/"  class="lw_ic_i lw_ic_i_web " srcset="">
+                    <img src="./images/mainPage/i_yt.png" alt="" url="https://www.youtube.com/"  class="lw_ic_i lw_ic_i_web " srcset="">
+                    <img src="./images/mainPage/i_figma.png" alt="" url="https://www.figma.com/"  class="lw_ic_i lw_ic_i_web " srcset="">
+                    <img src="./images/mainPage/i_google.png" alt="" url="https://www.google.com/"  class="lw_ic_i lw_ic_i_web " srcset="">
+                    <img src="./images/mainPage/i_gtp.png" alt="" url="https://chat.openai.com/" class="lw_ic_i lw_ic_i_web " srcset="">
+                    <img src="./images/mainPage/i_juSu.png" alt="" url="https://jut.su/" class="lw_ic_i lw_ic_i_web " srcset="">
+                    <img src="./images/mainPage/i_nf.png" alt="" url="https://www.netflix.com/" class="lw_ic_i lw_ic_i_web " srcset="">
+                    <img src="./images/mainPage/i_tt.png" alt="" url="https://www.tiktok.com/" class="lw_ic_i lw_ic_i_web " srcset="">
+                    <img src="./images/mainPage/i_mail.png" alt="" url="https://mail.google.com/" class="lw_ic_i lw_ic_i_web " srcset="">
+                </div>
+            </div>
+            <div class="helper_line"></div>
+            <div class="links_apps_cont links_cont">
+                <div class="links_apps_items links_item_cont">
+                    <img src="./images/mainPage/i_blender.png"  link='"C:\Apps\blender\blender-launcher.exe"'  alt="" class="lw_ic_i lw_ic_i_app " srcset="">
+                    <img src="./images/mainPage/i_discord.png"  link='"C:\Users\olegk\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk"'  alt="" class="lw_ic_i lw_ic_i_app " srcset="">
+                    <img src="./images/mainPage/i_dota.png"  link='"C:\Users\olegk\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Steam\Dota 2.url"'  alt="" class="lw_ic_i lw_ic_i_app " srcset="">
+                    <img src="./images/mainPage/i_gooogle.png"  link='"C:\Program Files\Google\Chrome\Application\chrome.exe"'  alt="" class="lw_ic_i lw_ic_i_app " srcset="">
+                    <img src="./images/mainPage/i_obs.png"  link='"C:\ProgramData\Microsoft\Windows\Start Menu\Programs\OBS Studio\OBS Studio (64bit).lnk"'  alt="" class="lw_ic_i lw_ic_i_app " srcset="">
+                    <img src="./images/mainPage/i_mc.png"  link='"C:\Users\olegk\AppData\Roaming\.minecraft\TLauncher.exe"'  alt="" class="lw_ic_i lw_ic_i_app " srcset="">
+                    <img src="./images/mainPage/i_word.png"  link='"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"'  class="lw_ic_i lw_ic_i_app " srcset="">
+                    <img src="./images/mainPage/i_vs_code.png" alt="" class="lw_ic_i lw_ic_i_app" link='"C:\Projects\electronTest\data\userAppsList\Code.exe.lnk"' srcset="">
+                    <img src="./images/mainPage/i_unity.png"  link='"C:\Program Files\Unity Hub\Unity Hub.exe"'  alt="" class="lw_ic_i lw_ic_i_app " srcset="">
+                    <img src="./images/mainPage/i_pw.png"  link='"C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE"'  alt="" class="lw_ic_i lw_ic_i_app " srcset="">
+                </div>
+            </div>
+
+        </div>
+    </div>
+<script src="./pageSet.js"></script>
+
+<script>
+    const { ipcRenderer } = require('electron');
+
+$('.ssi_inp').focus(function () {
+  $('input').off('keydown').on('keydown', function (event) {
+    if (event.keyCode === 13) {
+      url = `https://www.google.com/search?q=${$('.ssi_inp').val()}`;
+      ipcRenderer.send("createTabFromMain", url);
+    }
+  });
+});
+
+$('.lw_ic_i_web').click(function (e) { 
+    url = $(this).attr('url')
+    ipcRenderer.send("createTabFromMain", url);
+});
+
+$('.lw_ic_i_app').click(function (e) { 
+    link = $(this).attr('link')
+    ipcRenderer.send("openAppFromMain", link);
+});
+
+$('.lw_ic_i').click(function() {
+    const element = $(this);
+  
+    element.css({
+      transform: 'skew(10deg, -20deg)',
+      transition: '.3s'
+    });
+  
+    setTimeout(() => {
+      element.css('transform', 'skew(0, 0)');
+    }, 300);
+  });
+  
+ 
+
+
+</script>
+
+</body>
+</html>

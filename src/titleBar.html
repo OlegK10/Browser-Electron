@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./global.css">
+    <link rel="stylesheet" href="./titleBar.css">
+    <title>Document</title>
+</head>
+
+<body style="background-color: rgb(198, 99, 57);">
+    <div class="header_main">
+        <div class="titleBar drag_ele">
+
+            <div class="tabs-content noselect">
+
+                <div class="tab_cont drag_ele">
+                    <div class="tabs">
+
+                        <div class="tab tab_hm tab_active nodrag_ele" tabId="1">
+                            <div class="tab_name_img tab_name_img_hm">
+                                <img src="./images/titleBar/i_home.png" class="tb_img_home" alt="" srcset="">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button class="addTab nodrag_ele">+</button>
+                </div>
+
+            </div>
+
+            <div class="tb_navButtons">
+                <div class="tb_navBtnCon">
+                    <div class="tb_btns_cont tbNav_btn_hide noselect nodrag_ele">
+                        <img src="./images/titleBar/i_hide.png" alt="" class="tbNav_btn  noselect" srcset="">
+                    </div>
+                    <div class="tb_btns_cont tbNav_btn_min noselect drag_ele">
+                        <img src="./images/titleBar/i_min.png" alt="" class="tbNav_btn  noselect" srcset="">
+                    </div>
+                    <div class="tb_btns_cont tbNav_btn_close noselect nodrag_ele">
+                        <img src="./images/titleBar/i_close.png" alt="" class="tbNav_btn  noselect" srcset="">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="urlNavCont">
+            <div class="unc_bnts">
+                <div class="tabs_btn_a tab_btn_back noselect"><img src="./images/url/i_navL.png" alt=""
+                        class="tabs_btn_Nav_img"></div>
+                <div class="tabs_btn_a tab_btn_forward noselect"><img src="./images/url/i_navR.png" alt=""
+                        class="tabs_btn_Nav_img"></div>
+                <div class="tabs_btn_a tab_btn_refresh noselect"><img src="./images/url/i_navRl.png" alt=""
+                        class="tabs_btn_Nav_img"></div>
+            </div>
+
+            <div class="urlNav_url_cont">
+                <div class="inp_url_img">
+                    <img src="./images/url/i_search.png" alt="" class="unu_img noselect">
+                    <input type="text" class="url_inp" value="https://">
+                </div>
+                <img src="./images/url/i_sett.png" alt="" class="un_set">
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="./pageSet.js"></script>
+
+<script>
+    const { ipcRenderer } = require('electron');
+
+    ipcRenderer.on('createtab', (event, currentTabId, currentUrl) => {
+        let tab = $('<div>').addClass('tab nodrag_ele').attr('tabId', currentTabId).appendTo('.tabs')
+        let tab_name_img = $('<div>').addClass('tab_name_img').appendTo(tab)
+        $('<img>').addClass('tab-favicon').attr('src', "./images/test.png").appendTo(tab_name_img)
+        $('<input>').addClass('tab-name').val('New Tab').prop('readonly', true).appendTo(tab_name_img)
+        $('<div>').addClass('tab_close').append($('<img>').addClass('tab_close_btn').attr('src', "./images/titleBar/i_close_tab.png")).appendTo(tab)
+        $('.tab').removeClass('tab_active')
+        $(tab).addClass('tab_active')
+
+    });
+
+
+    $('.addTab').click(() => {
+        ipcRenderer.send("createTab");
+    })
+
+
+    $(document).on('click', '.tab_name_img', function () {
+        var tabId = $(this).parent().attr('tabId');
+        ipcRenderer.send("tabClicked", parseInt(tabId));
+
+        $('.tab_name_img').parent().removeClass('tab_active')
+        $(this).parent().addClass('tab_active')
+    });
+
+
+    $(document).on('click', '.tab_close', function () {
+        $('.tab').removeClass('tab_active')
+        $('.tab_hm').addClass('tab_active')
+        var tabId = $(this).parent().attr('tabId');
+        ipcRenderer.send("tabDelete", parseInt(tabId));
+        $(this).parent().remove();
+    });
+
+
+    ipcRenderer.on('url-change', (event, currentUrl, tabId) => {
+
+        $('.url_inp').val(currentUrl);
+
+        const domain = new URL(currentUrl);
+        const faviconUrl = "https://api.faviconkit.com/" + domain.host + "/16";
+
+        let element = $('.tab').toArray().find(item => parseInt($(item).attr('tabid')) === tabId);
+        $(element).children().find('.tab-favicon').attr('src', faviconUrl)
+    });
+
+
+    $('.url_inp').focus(function () {
+        $('input').off('keydown').on('keydown', function (event) {
+            if (event.keyCode === 13) {
+                url = $('.url_inp').val()
+                ipcRenderer.send("tabUrlChange", url);
+            }
+        });
+    });
+
+
+    ipcRenderer.on('tabUrl-changeInfo', (Purl) => {
+        console.log(Purl)
+    });
+
+
+    ipcRenderer.on('titleUpdate', (event, title, tabId) => {
+        let element = $('.tab').toArray().find(item => parseInt($(item).attr('tabid')) === tabId);
+        $(element).children().find('.tab-name').val(title)
+    });
+
+
+    $('.tbNav_btn_hide').click(() => {
+        ipcRenderer.send("app-hide");
+    })
+
+    $('.tbNav_btn_close').click(() => {
+        ipcRenderer.send("app-close");
+    })
+
+
+    $('.tab_btn_back').click(() => {
+        ipcRenderer.send("page-back");
+    })
+
+    $('.tab_btn_forward').click(() => {
+        ipcRenderer.send("page-forward");
+    })
+
+    $('.tab_btn_refresh').click(() => {
+        ipcRenderer.send("page-refresh");
+    })
+
+</script>
+
+</html>

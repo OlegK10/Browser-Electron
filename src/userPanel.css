@@ -1,0 +1,104 @@
+.userPanel{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: var(--c-dark-1);
+}
+
+.up_icons, .up_cont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.up_icons{   
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    justify-content: space-around;
+
+}
+
+.up_cont{
+    height: 100%;
+    justify-content: space-around;
+}
+
+.up_ico{
+    padding: 3px;
+    width: 28px;
+    cursor: pointer;
+}
+
+.up_ico_active{
+  border-radius: 5px;
+  background-color: var(--c-custom-4);
+}
+
+.up_ico:hover{
+    opacity: .7;
+    transform: scale(95%);
+}
+
+.isLoadAnim{
+    position: absolute;
+    top: 10px;
+}
+
+.iLaim{
+    display: block;
+    width: 25px;
+}
+
+.loadingAnim{
+    position: relative;
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.laim_an_img{
+    position: absolute;
+}
+
+.laim_an_img_1 {
+    animation: ring_1 7s linear infinite;
+  }
+  
+  .laim_an_img_2 {
+    animation: ring_2 2s ease-in-out  infinite;
+  }
+  
+  .laim_an_img_3 {
+    animation: ring_3 1s ease-in-out infinite;
+  }
+  
+  @keyframes ring_1 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes ring_2 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+  
+  @keyframes ring_3 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

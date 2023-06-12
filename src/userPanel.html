@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./global.css">
+    <link rel="stylesheet" href="./userPanel.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="userPanel">
+        <div class="up_cont">
+           <div class="isLoadAnim">
+                <div style="display:none" class="loadingAnim">
+                    <img class="laim_an_img laim_an_img_1" src="./images/userPanel/loaing.png" alt="" srcset="">
+                    <img class="laim_an_img laim_an_img_2" src="./images/userPanel/load_ring_1.png" alt="" srcset="">
+                    <img class="laim_an_img laim_an_img_3" src="./images/userPanel/load_ring_2.png" alt="" srcset="">
+                </div>
+                <img src="./images/userPanel/isDone.png" alt="" class="iLaim">
+           </div>
+          <div class="up_icons noselect">
+            <img src="./images/userPanel/i_tasks.png" alt="" class="up_ico up_ico_task up_ico_active">
+            <img src="./images/userPanel/i_play.png" alt="" class="up_ico">
+            <img src="./images/userPanel/i_miniWindow.png" alt="" class="up_ico">
+            <img src="./images/userPanel/i_monitor.png" alt="" class="up_ico">
+            <img src="./images/userPanel/i_clock.png" alt="" class="up_ico">
+          </div>
+          
+          <div class="up_icoMusic noselect">
+            <img src="./images/userPanel/i_music.png" alt="" class="up_ico up_music_noselect">
+          </div>
+  
+        </div>
+      </div>
+
+</body>
+
+<script src="./pageSet.js"></script>
+<script src="./userPanel.js"></script>
+<script>
+    const { ipcRenderer } = require('electron');
+
+    ipcRenderer.on('startLoad',(event)=>{
+        $('.loadingAnim').show()
+        $('.iLaim').hide()
+    })
+    ipcRenderer.on('stopLoad',(event)=>{
+        $('.loadingAnim').hide()
+        $('.iLaim').show()
+    })
+
+
+    $('.up_ico').click(()=>{
+      ipcRenderer.send('openLeftPanelTaskWindow')
+    })
+
+</script>
+
+<script>
+</script>
+</html>

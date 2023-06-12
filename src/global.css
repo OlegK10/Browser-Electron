@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@100;200;300;400;500;600;700&display=swap');
+*{
+	margin: 0;
+	padding: 0;
+  	border:none;
+    background-image:none;
+    background-color:transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    outline: none;
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+    transition: .22s all;
+    font-family: var(--ff-normal);
+    color: var(--c-white-0);
+    }	
+    button, a{cursor: pointer;}
+    body{
+      overflow: hidden;
+    }
+    .noselect{
+      -webkit-touch-callout: none;
+        -webkit-user-select: none;
+         -khtml-user-select: none; 
+           -moz-user-select: none;
+            -ms-user-select: none; 
+                user-select: none;
+    }
+
+     :root{
+    --c-white-0:#FFFFFF;
+    --c-white-1:#939393;
+    --c-dark-1: #181818;
+    --c-dark-2:#1c1821;
+    --c-dark-3:#242028;
+    --c-custom-2:#413a48;
+    --c-custom-3: #58239e;
+    --c-custom-4: #6c469d;
+
+
+    --ff-normal : 'Urbanist', sans-serif;
+    }
+
+    .drag_ele{
+      -webkit-user-select: none;
+      -webkit-app-region: drag;
+    }
+
+    .nodrag_ele{
+      -webkit-app-region: no-drag;
+    }
+
+    /* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
